@@ -11,22 +11,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/categorie")
+ * @Route("/admin/categorie")
  */
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/", name="categorie_index", methods={"GET"})
+     * @Route("/", name="admin_categorie_index", methods={"GET"})
      */
     public function index(CategorieRepository $categorieRepository): Response
     {
-        return $this->render('categorie/index.html.twig', [
+        return $this->render('admin/categorie/index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/new", name="categorie_new", methods={"GET","POST"})
+     * @Route("/new", name="admin_categorie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -39,27 +39,27 @@ class CategorieController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('categorie_index');
+            return $this->redirectToRoute('admin/categorie_index');
         }
 
-        return $this->render('categorie/new.html.twig', [
+        return $this->render('admin/categorie/new.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="categorie_show", methods={"GET"})
+     * @Route("/{id}", name="admin_categorie_show", methods={"GET"})
      */
     public function show(Categorie $categorie): Response
     {
-        return $this->render('categorie/show.html.twig', [
+        return $this->render('admin/categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="admin_categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -69,19 +69,19 @@ class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('categorie_index', [
+            return $this->redirectToRoute('admin/categorie_index', [
                 'id' => $categorie->getId(),
             ]);
         }
 
-        return $this->render('categorie/edit.html.twig', [
+        return $this->render('admin/categorie/edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="categorie_delete", methods={"DELETE"})
+     * @Route("/{id}", name="admin_categorie_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Categorie $categorie): Response
     {
@@ -91,6 +91,6 @@ class CategorieController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('categorie_index');
+        return $this->redirectToRoute('admin/categorie_index');
     }
 }
